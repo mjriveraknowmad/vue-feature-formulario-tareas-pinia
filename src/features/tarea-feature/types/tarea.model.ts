@@ -1,5 +1,5 @@
 export interface TareaFormModel {
-  id?: number;
+  id?: string;
   nombre: string;
   estado: string;
   categorias: string[];

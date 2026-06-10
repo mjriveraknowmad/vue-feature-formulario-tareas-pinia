@@ -1,10 +1,24 @@
 import { useTareasStore } from '@/stores/tareas';
 import { computed, ref } from 'vue';
 import { type TareaFormModel } from '../types/tarea.model';
+import { useRoute } from 'vue-router';
+import router from '@/router';
 
 
 export function useTareaForm() {
   const tareasStore = useTareasStore();
+  const route = useRoute();
+  const tareaId = route.params?.id ? String(route.params.id) : null;
+
+  if(tareaId) {
+    const tarea = tareasStore.obtenerTareaPorId(tareaId);
+    if (tarea) {
+      tareasStore.setTareaActual(tarea);
+    }
+  } else {
+    tareasStore.resetTareaActual();
+  }
+
   // Estado del formulario
   const form = computed(() => tareasStore.tareaActual);
   
@@ -58,9 +72,14 @@ export function useTareaForm() {
     if (!validate()) return;
 
     isSubmitting.value = true;
+    const actualizar = Boolean(form.value.id);
     
     try {
-      tareasStore.agregarTarea({...form.value});
+      if (actualizar) {
+        tareasStore.modificarTarea({...form.value});
+      } else {
+        tareasStore.agregarTarea({...form.value});
+      }
 
       // Simulación de petición API
       // await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -68,6 +87,9 @@ export function useTareaForm() {
       
       // Resetear formulario tras éxito
       tareasStore.resetTareaActual();
+      if(actualizar) {
+        router.push('/'); // Redirige a la lista después de editar
+      }
     } catch (error) {
       console.error('Error al enviar:', error);
     } finally {

@@ -28,6 +28,17 @@
                     <button class="btn btn-danger btn-sm" @click="deleteTarea(item.id!)">
                         Eliminar
                     </button>
+                    <router-link 
+                        class="btn btn-warning ml-2 btn-sm"
+                        :to="{
+                            name: 'Editar',
+                            params: {
+                                id: item.id
+                            }
+                        }"
+                    >
+                        Editar
+                    </router-link>
                 </td>
             </tr>
         </tbody>
@@ -42,12 +53,8 @@ import { computed } from 'vue';
 const tareasStore = useTareasStore();
 const tareas = computed(() => tareasStore.tareas);
 
-const deleteTarea = (id: number) => {
+const deleteTarea = (id: string) => {
     tareasStore.eliminarTarea(id);
-}
-
-const editarTarea = (id: number) => {
-    console.log('Editar tarea con ID:', id, ' a futuro  haremos un navigateTo a editar' );
 }
 
 </script>
