@@ -1,6 +1,6 @@
 import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
-import type { TareaFormModel } from "@/features/tarea-form-feature/types/tarea.model";
+import type { TareaFormModel } from "@/features/tarea-feature/types/tarea.model";
 import shortid from "shortid";
 
 export const useTareasStore = defineStore("tareas", () => {

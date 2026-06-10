@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TareaForm, TareaList } from '../features/tarea-form-feature';
+import { TareaForm, TareaList } from '../features/tarea-feature';
 </script>
 
 <template>
